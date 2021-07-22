@@ -16,7 +16,7 @@ export class App extends Component {
       <BrowserRouter>
         <NavBar />
         <Switch>
-          <Route exact path='/' component={HomePage} />
+          <Route exact path='/concertcare-task' component={HomePage} />
           <Route exact path='/user/:id' component={UserProfile} />
           <Route exact path='/user/:id/todos' component={Todos} />
           <Route exact path='/user/:id/create' component={CreatePostForm} />

@@ -30,7 +30,7 @@ const UserProfile = ({
           <Row>
             <Col className='d-flex justify-content-between '>
               <Button id='back-btn' className='mb-4'>
-                <Link to='/'>&larr; Go To Home</Link>
+                <Link to='/concertcare-task'>&larr; Go To Home</Link>
               </Button>
               <Button id='back-btn' className='mb-4 create'>
                 <Link to={`/user/${id}/create`}>Create New Post</Link>

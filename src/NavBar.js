@@ -1,9 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   return (
     <nav className='nav-bar'>
-      <h3>ConcertCare Task</h3>
+      <h3>
+        <Link to='/concertcare-task'>ConcertCare Task</Link>
+      </h3>
       <div className='nav-bar-link'>
         <a
           href='https://github.com/Myilvaganan/concertcare-task'
