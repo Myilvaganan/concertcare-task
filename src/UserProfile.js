@@ -12,9 +12,10 @@ import { Link } from 'react-router-dom';
 import Loader from './utils/Loader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Redirect } from 'react-router-dom';
 const UserProfile = ({
   match,
+  history,
   getUserByID,
   getPostByUser,
   getTodos,
@@ -23,18 +24,20 @@ const UserProfile = ({
   users: { user, user_loading },
 }) => {
   const { id } = match.params;
+  const [deleted, setDeleted] = React.useState(false);
 
   useEffect(() => {
     getUserByID(id);
     getPostByUser(id);
-  }, [getUserByID, getPostByUser, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getUserByID, getPostByUser, deleted, id]);
 
-  const deleteHandler = (id) => {
-    deletePost(id);
+  const deleteHandler = (post_id) => {
+    deletePost(post_id);
     toastify();
     setTimeout(() => {
-      window.location.reload();
-    }, 1500);
+      setDeleted(true);
+    }, 1000);
   };
 
   const toastify = () => {
@@ -102,7 +105,10 @@ const UserProfile = ({
                         <Card.Title>{post_i.title}</Card.Title>
                         <Card.Text>{post_i.body}</Card.Text>
                       </Card.Body>
-                      <Button onClick={(e) => deleteHandler(post_i.id)} id="delete-btn">
+                      <Button
+                        onClick={(e) => deleteHandler(post_i.id)}
+                        id='delete-btn'
+                      >
                         Delete
                       </Button>
                     </Card>
