@@ -11,3 +11,5 @@ export const GET_POST_BY_USER = 'GET_POST_BY_USER';
 export const SHOW_ERROR = 'SHOW_ERROR';
 
 export const CREATE_POST = 'CREATE_POST';
+
+export const DELETE_POST = 'DELETE_POST';

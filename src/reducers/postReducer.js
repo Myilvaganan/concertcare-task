@@ -3,6 +3,7 @@ import {
   SHOW_ERROR,
   GET_POST_BY_USER,
   CREATE_POST,
+  DELETE_POST,
 } from '../constants';
 
 const initialState = {
@@ -34,6 +35,13 @@ const postReducer = (state = initialState, action) => {
         ...state,
         posts: [payload, ...state.posts],
         loading: false,
+      };
+
+    case DELETE_POST:
+      return {
+        ...state,
+        post: state.post.filter((item) => item._id !== payload),
+        post_loading: false,
       };
     case SHOW_ERROR:
       return {

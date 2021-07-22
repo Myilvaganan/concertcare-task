@@ -7,6 +7,7 @@ import {
   GET_POST_BY_USER,
   GET_TODOS,
   CREATE_POST,
+  DELETE_POST,
 } from '../constants';
 
 const token =
@@ -111,6 +112,26 @@ export const createPost = (id, data) => async (dispatch) => {
     });
 
     console.log(res.data);
+  } catch (err) {
+    console.error(err);
+    dispatch({
+      type: SHOW_ERROR,
+      payload: err.message,
+    });
+  }
+};
+
+export const deletePost = (id, data) => async (dispatch) => {
+  try {
+    await axios.delete(
+      `https://gorest.co.in/public/v1/posts/${id}?access-token=` + token,
+      data,
+      { Authorization: `Bearer ${token}` }
+    );
+    dispatch({
+      type: DELETE_POST,
+      payload: id,
+    });
   } catch (err) {
     console.error(err);
     dispatch({

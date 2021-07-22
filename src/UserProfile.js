@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { getPostByUser, getUserByID, getTodos } from './actions/index';
+import {
+  getPostByUser,
+  getUserByID,
+  getTodos,
+  deletePost,
+} from './actions/index';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Loader from './utils/Loader';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserProfile = ({
   match,
   getUserByID,
   getPostByUser,
   getTodos,
+  deletePost,
   posts: { post, post_loading },
   users: { user, user_loading },
 }) => {
@@ -21,6 +29,18 @@ const UserProfile = ({
     getPostByUser(id);
   }, [getUserByID, getPostByUser, id]);
 
+  const deleteHandler = (id) => {
+    deletePost(id);
+    toastify();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+  };
+
+  const toastify = () => {
+    toast.success('Post has been Deleted successfully !');
+  };
+
   return (
     <Container className='my-5'>
       {post_loading && user_loading ? (
@@ -28,6 +48,7 @@ const UserProfile = ({
       ) : (
         <>
           <Row>
+            <ToastContainer />
             <Col className='d-flex justify-content-between '>
               <Button id='back-btn' className='mb-4'>
                 <Link to='/concertcare-task'>&larr; Go To Home</Link>
@@ -81,6 +102,9 @@ const UserProfile = ({
                         <Card.Title>{post_i.title}</Card.Title>
                         <Card.Text>{post_i.body}</Card.Text>
                       </Card.Body>
+                      <Button onClick={(e) => deleteHandler(post_i.id)} id="delete-btn">
+                        Delete
+                      </Button>
                     </Card>
                   </Col>
                 );
@@ -101,6 +125,7 @@ UserProfile.propTypes = {
   getUserByID: PropTypes.func.isRequired,
   getPostByUser: PropTypes.func.isRequired,
   getTodos: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
   posts: PropTypes.object.isRequired,
 };
 
@@ -113,4 +138,5 @@ export default connect(mapStateToProps, {
   getPostByUser,
   getUserByID,
   getTodos,
+  deletePost,
 })(UserProfile);
